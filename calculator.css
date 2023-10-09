@@ -1,0 +1,24 @@
+body {
+	font-family: sans-serif;
+}
+body * {
+	box-sizing: border-box;
+}
+ul li {
+	margin-bottom: 10px;
+}
+.starting-bar,
+.contribution-bar,
+.return-bar,
+.final-bar {
+	height: 10px;
+}
+.starting-bar {
+	background-color: blue;
+}
+.return-bar {
+	background-color: yellowgreen;
+}
+.final-bar {
+	background-color: green;
+}
