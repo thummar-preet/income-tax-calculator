@@ -1,6 +1,5 @@
 // Input Elements
 const amountEl = document.getElementsByName('amount');
-const contributionEl = document.getElementsByName('contribution');
 const durationEl = document.getElementsByName('duration');
 const interestEl = document.getElementsByName('interest');
 
@@ -36,9 +35,8 @@ const formatValue = (value, type) => {
 }
 
 // Display Results
-const displayResults = (amount, duration, totalContribution, totalReturn, finalBalance) => {
+const displayResults = (amount, duration, totalReturn, finalBalance) => {
 	startingVal[0].innerHTML = amount;
-	contributionVal[0].innerHTML = totalContribution;
 	durationVal[0].innerHTML = duration;
 	returnVal[0].innerHTML = totalReturn;
 	finalVal[0].innerHTML = finalBalance;
@@ -50,14 +48,12 @@ const getRatio = (value, max) => {
 }
 
 // Render Visuals
-const renderVisuals = (amount, totalContribution, totalReturn, finalBalance) => {
+const renderVisuals = (amount, totalReturn, finalBalance) => {
 	const startingBar = document.querySelectorAll('.starting-bar');
-	const contributionBar = document.querySelectorAll('.contribution-bar');
 	const returnBar = document.querySelectorAll('.return-bar');
 	const finalBar = document.querySelectorAll('.final-bar');
 
 	startingBar[0].style.width = getRatio(amount, finalBalance) + '%';
-	contributionBar[0].style.width = getRatio(totalContribution, finalBalance) + '%';
 	returnBar[0].style.width = getRatio(totalReturn, finalBalance) + '%';
 	finalBar[0].style.width = getRatio(finalBalance, finalBalance) + '%';
 }
@@ -65,27 +61,23 @@ const renderVisuals = (amount, totalContribution, totalReturn, finalBalance) => 
 // Calculate
 const calculate = () => {
 	let amount = amountEl[0].value;
-	let contribution = contributionEl[0].value;
 	let duration = durationEl[0].value;
 	let interest = interestEl[0].value;
 	let rate = interest/100;
 	let finalBalance;
-	let totalContribution;
 	let totalReturn;
 
 	// const
 	if (rate) {
-		finalBalance = amount * Math.pow(1 + rate, duration) + contribution * ( (Math.pow(1 + rate, duration) - 1) / rate );
-		totalContribution = contribution * duration;
-		totalReturn = finalBalance - amount - totalContribution;
+		finalBalance = amount * Math.pow(1 + rate, duration);
+		totalReturn = finalBalance - amount;
 	} else {
-		totalContribution = contribution * duration;
-		finalBalance = +amount + totalContribution;
-		totalReturn = finalBalance - amount - totalContribution;
+		finalBalance = +amount;
+		totalReturn = finalBalance - amount;
 	}
 
-	renderVisuals(amount, totalContribution, totalReturn, finalBalance);
-	displayResults(formatValue(amount, '$'), duration, formatValue(totalContribution, '$'), formatValue(totalReturn, '$'), formatValue(finalBalance, '$'));
+	renderVisuals(amount, totalReturn, finalBalance);
+	displayResults(formatValue(amount, '$'), duration,formatValue(totalReturn, '$'), formatValue(finalBalance, '$'));
 }
 
 
